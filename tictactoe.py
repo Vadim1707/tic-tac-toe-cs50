@@ -54,6 +54,10 @@ def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
+    r, c = action
+    if (r not in [0, 1, 2]) or (c not in [0, 1, 2]):
+        raise ValueError(f"Can't put element here. {action} is out of the board")
+
     new_board = [[EMPTY, EMPTY, EMPTY],
                 [EMPTY, EMPTY, EMPTY],
                 [EMPTY, EMPTY, EMPTY]]
@@ -62,6 +66,8 @@ def result(board, action):
         for j, element in enumerate(row):
             new_board[i][j] = board[i][j]
             if (i, j) == action:
+                if board[i][j]:
+                    raise ValueError(f"Can't put {sign} into non-empty cell {(i, j)}")
                 new_board[i][j] = sign
 
     return new_board
@@ -71,7 +77,7 @@ def result(board, action):
 
 
 
-def  winner(board):
+def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
